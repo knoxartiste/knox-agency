@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account | Knox Artiste Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#1A1A1A;--surface:#222222;--surface2:#272727;
+  --accent:#C0392B;--text:#C8C4BF;--muted:#6E6B67;
+  --border:rgba(255,255,255,0.07);--border-mid:rgba(255,255,255,0.12);
+  --r:6px;--r-lg:10px;
+}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px}
+
+.topbar{position:fixed;top:0;left:0;right:0;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.topbar-logo{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:var(--accent)}
+.topbar-back{font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:0.5px;transition:color .2s}
+.topbar-back:hover{color:var(--text)}
+.topbar-back svg{margin-right:5px;vertical-align:middle;opacity:.6}
+
+.card{width:100%;max-width:480px;background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--border-mid);border-radius:var(--r-lg);padding:40px}
+.card-stamp{font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:20px}
+.card-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--text);margin-bottom:6px}
+.card-sub{font-size:13px;color:var(--muted);margin-bottom:32px;line-height:1.5}
+
+.field{margin-bottom:18px}
+.field label{display:block;font-size:11px;letter-spacing:1.5px;font-family:'Bebas Neue',sans-serif;color:var(--muted);margin-bottom:8px}
+.field input,.field select{
+  width:100%;background:var(--surface2);border:none;
+  border-left:2px solid var(--muted);
+  border-radius:0 var(--r) var(--r) 0;
+  padding:11px 14px;font-size:14px;font-family:'DM Sans',sans-serif;
+  color:var(--text);outline:none;transition:border-color .2s,background .2s;
+  appearance:none;
+}
+.field input::placeholder{color:var(--muted)}
+.field input:focus,.field select:focus{border-left-color:var(--accent);background:#2C2C2C}
+.field input:not(:placeholder-shown){border-left-color:rgba(192,57,43,0.45)}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+.field-hint{font-size:11px;color:var(--muted);margin-top:6px}
+
+.btn-primary{
+  width:100%;background:var(--accent);color:#fff;
+  border:none;border-radius:var(--r);padding:13px;
+  font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;
+  cursor:pointer;margin-top:8px;transition:opacity .2s;
+}
+.btn-primary:hover{opacity:.85}
+
+.terms{font-size:12px;color:var(--muted);margin-top:14px;text-align:center;line-height:1.5}
+.terms a{color:var(--text);text-decoration:underline;text-decoration-color:var(--border-mid)}
+
+.divider{border:none;border-top:1px solid var(--border);margin:28px 0}
+.card-footer{text-align:center;font-size:13px;color:var(--muted)}
+.card-footer a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--border-mid);padding-bottom:1px;transition:border-color .2s}
+.card-footer a:hover{border-bottom-color:var(--accent);color:#fff}
+
+.demo-note{margin-top:24px;padding:12px 16px;background:rgba(192,57,43,0.06);border:1px solid rgba(192,57,43,0.15);border-radius:var(--r);font-size:12px;color:var(--muted);text-align:center;line-height:1.5}
+.demo-note strong{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-logo">Knox Artiste Group — Client Portal</span>
+  <a href="/login" class="topbar-back">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="8,2 4,6 8,10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to Sign In
+  </a>
+</div>
+
+<div class="card">
+  <div class="card-stamp">New Account</div>
+  <div class="card-title">Create your portal.</div>
+  <div class="card-sub">Set up your Knox Artiste client account to manage projects, review proposals, and communicate with our team — all in one place.</div>
+
+  <form onsubmit="handleRegister(event)">
+    <div class="two-col">
+      <div class="field">
+        <label>Company / Brand Name</label>
+        <input type="text" placeholder="Acme Corp" id="company">
+      </div>
+      <div class="field">
+        <label>Industry</label>
+        <input type="text" placeholder="e.g. Hospitality">
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field">
+        <label>Your Name</label>
+        <input type="text" placeholder="First Last">
+      </div>
+      <div class="field">
+        <label>Your Role</label>
+        <input type="text" placeholder="e.g. Marketing Head">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Work Email</label>
+      <input type="email" placeholder="you@company.com" id="email">
+    </div>
+
+    <div class="field">
+      <label>Phone</label>
+      <input type="tel" placeholder="+971 50 000 0000">
+    </div>
+
+    <div class="two-col">
+      <div class="field">
+        <label>Password</label>
+        <input type="password" placeholder="Min. 8 characters" id="password">
+      </div>
+      <div class="field">
+        <label>Confirm Password</label>
+        <input type="password" placeholder="Repeat password">
+      </div>
+    </div>
+
+    <button type="submit" class="btn-primary">Create Account</button>
+    <div class="terms">By creating an account you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</div>
+  </form>
+
+  <hr class="divider">
+  <div class="card-footer">Already have an account? <a href="/login">Sign in →</a></div>
+
+  <div class="demo-note"><strong>Demo mode</strong> — fills in sample data on the dashboard. Real account creation coming soon.</div>
+</div>
+
+<script>
+function handleRegister(e) {
+  e.preventDefault();
+  const company = document.getElementById('company').value || 'Acme Corp';
+  sessionStorage.setItem('ka_demo_company', company);
+  window.location.href = '/dashboard';
+}
+</script>
+</body>
+</html>
