@@ -9,18 +9,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Pull latest from GitHub to server
+        run: |
+          response=$(curl -s -X POST "https://cpl28.main-hosting.eu:2083/execute/VersionControl/update" \
+            -H "Authorization: cpanel knoxarti:${{ secrets.CPANEL_API_TOKEN }}" \
+            --data-urlencode "repository_root=/home/knoxarti/knoxartiste.agency")
+          status=$(echo $response | python3 -c "import json,sys; print(json.load(sys.stdin).get('status',0))")
+          echo "Update status: $status"
+          [ "$status" = "1" ] || exit 1
 
-      - name: Deploy to Hostinger via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: cpl28.main-hosting.eu
-          username: knoxarti
-          key: ${{ secrets.DEPLOY_KEY }}
-          port: 22
-          script: |
-            cd ~/knoxartiste.agency
-            git fetch origin main
-            git reset --hard origin/main
-            echo "Deployed $(git rev-parse --short HEAD) at $(date)"
+      - name: Deploy HEAD commit
+        run: |
+          response=$(curl -s -X POST "https://cpl28.main-hosting.eu:2083/execute/VersionControlDeployment/create" \
+            -H "Authorization: cpanel knoxarti:${{ secrets.CPANEL_API_TOKEN }}" \
+            --data-urlencode "repository_root=/home/knoxarti/knoxartiste.agency")
+          status=$(echo $response | python3 -c "import json,sys; print(json.load(sys.stdin).get('status',0))")
+          echo "Deploy status: $status"
+          [ "$status" = "1" ] || exit 1
