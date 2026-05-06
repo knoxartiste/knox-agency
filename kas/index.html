@@ -1061,7 +1061,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     <p>Fill in as much detail as you can. We use this to build your client profile, assign a Shoot ID, spec your deliverables, and put a proposal together — all before our first call.</p>
   </div>
 
-  <form action="https://formspree.io/f/REPLACE_WITH_YOUR_ID" method="POST">
+  <form action="#" method="POST">
     <input type="hidden" name="_subject" value="New Studio RFP — Knox Artiste">
     <input type="hidden" name="_entity" value="Knox Artiste Studio">
 
@@ -2059,4 +2059,90 @@ syncDeliverables();
 </script>
 
 
+
+<script>
+(function() {
+  var SUPABASE_URL = 'https://pcdgantrzgiwbhltcxdm.supabase.co';
+  var ANON_KEY    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjZGdhbnRyemdpd2JobHRjeGRtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNzIzMTMsImV4cCI6MjA5MzY0ODMxM30.1HeIqIgYAZSznFXPjf3ealnk70BDMctuqmu73U7wQzQ';
+
+  var form = document.querySelector('form');
+  if (!form) return;
+
+  // Inject success/error UI after the form
+  var successDiv = document.createElement('div');
+  successDiv.id = 'rfp-success';
+  successDiv.style.cssText = 'display:none;text-align:center;padding:60px 20px;';
+  successDiv.innerHTML = '<div style="font-size:48px;margin-bottom:16px;">✓</div>' +
+    '<h2 style="font-family:Bebas Neue,sans-serif;font-size:32px;letter-spacing:2px;color:#C8C4BF;margin-bottom:8px;">Brief Received</h2>' +
+    '<p style="color:#6E6B67;font-size:15px;">We'll review your brief and be in touch within 24 hours.<br>For urgent enquiries: <a href="mailto:films@knoxartiste.com" style="color:#C0392B;">films@knoxartiste.com</a></p>';
+  form.parentNode.insertBefore(successDiv, form.nextSibling);
+
+  var errorDiv = document.createElement('div');
+  errorDiv.id = 'rfp-error';
+  errorDiv.style.cssText = 'display:none;margin-top:16px;padding:14px 20px;background:rgba(192,57,43,0.15);border-left:3px solid #C0392B;color:#C8C4BF;font-size:14px;border-radius:4px;';
+  form.appendChild(errorDiv);
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var btn = form.querySelector('.submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+    errorDiv.style.display = 'none';
+
+    var fd = new FormData(form);
+
+    // Pull core fields
+    var lead = {
+      entity: 'kas',
+      name: fd.get('name') || '',
+      email: fd.get('email') || '',
+      phone: fd.get('phone') || null,
+      company: fd.get('company') || null,
+      form_data: {}
+    };
+
+    // Collect everything else into form_data
+    var skip = ['name','email','phone','company','_subject','_entity'];
+    var arrays = {};
+    fd.forEach(function(val, key) {
+      if (skip.includes(key)) return;
+      if (key.endsWith('[]')) {
+        var k = key.slice(0,-2);
+        arrays[k] = arrays[k] || [];
+        arrays[k].push(val);
+      } else if (val !== '') {
+        lead.form_data[key] = val;
+      }
+    });
+    Object.assign(lead.form_data, arrays);
+
+    try {
+      var res = await fetch(SUPABASE_URL + '/rest/v1/leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': ANON_KEY,
+          'Authorization': 'Bearer ' + ANON_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(lead)
+      });
+
+      if (res.ok || res.status === 201) {
+        form.style.display = 'none';
+        successDiv.style.display = 'block';
+        successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        var err = await res.json().catch(function(){ return {}; });
+        throw new Error(err.message || 'Status ' + res.status);
+      }
+    } catch(err) {
+      errorDiv.textContent = 'Something went wrong (' + err.message + '). Please try again or email films@knoxartiste.com';
+      errorDiv.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Submit Brief';
+    }
+  });
+})();
+</script>
 </body>
