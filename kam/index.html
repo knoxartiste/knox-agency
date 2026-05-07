@@ -522,6 +522,50 @@ footer {
   .platform-grid { grid-template-columns: repeat(2,1fr); }
   .svc-check-grid { grid-template-columns: 1fr; }
 }
+
+/* ── SERVICE CATEGORY CARDS ── */
+.svc-card-grid {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.svc-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border-mid);
+  border-left: 2px solid var(--border-mid);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  user-select: none; -webkit-user-select: none;
+}
+.svc-card:hover {
+  border-color: rgba(192,57,43,0.35);
+  border-left-color: rgba(192,57,43,0.5);
+}
+.svc-card:has(input:checked) {
+  border-color: var(--accent);
+  border-left-color: var(--accent);
+  background: rgba(192,57,43,0.07);
+}
+.svc-card-body { flex: 1; }
+.svc-card-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--text); margin-bottom: 4px;
+}
+.svc-card-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: var(--muted); line-height: 1.55;
+}
+@media (max-width: 768px) {
+  .svc-card-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -544,7 +588,7 @@ footer {
 
 <!-- FORM -->
 <section class="form-wrap">
-<form id="kam-rfp" action="#" method="POST">
+<form id="kam-rfp" action="https://formspree.io/REPLACE_WITH_YOUR_ID" method="POST">
 
   <!-- 01 YOUR DETAILS -->
   <div class="form-divider">
@@ -678,170 +722,147 @@ footer {
     </div>
   </div>
 
-  <!-- 03 MONTHLY PACKAGE BUILDER -->
+  <!-- 03 SOCIAL MEDIA & CONTENT -->
   <div class="form-divider">
     <span class="div-num">03</span>
-    <span class="div-label">Monthly Package</span>
+    <span class="div-label">Social Media &amp; Content</span>
     <span class="div-rule"></span>
   </div>
   <div class="form-grid">
-    <div class="pkg-section">
+    <div class="field full">
+      <label>Which social media or content services are you interested in? Select all that apply.</label>
+    </div>
+    <div class="svc-card-grid">
 
-      <!-- Shoots per month -->
-      <div class="pkg-row">
-        <div class="pkg-row-label">Shoots Per Month</div>
-        <div class="btn-group" id="shoots-group">
-          <button type="button" class="pkg-btn" data-key="shoots" data-val="None" onclick="setPkg(this,'shoots')">None</button>
-          <button type="button" class="pkg-btn" data-key="shoots" data-val="1 shoot/month" onclick="setPkg(this,'shoots')">1</button>
-          <button type="button" class="pkg-btn" data-key="shoots" data-val="2 shoots/month" onclick="setPkg(this,'shoots')">2</button>
-          <button type="button" class="pkg-btn" data-key="shoots" data-val="3 shoots/month" onclick="setPkg(this,'shoots')">3</button>
-          <button type="button" class="pkg-btn" data-key="shoots" data-val="4+ shoots/month" onclick="setPkg(this,'shoots')">4+</button>
+      <label class="svc-card">
+        <input type="checkbox" name="services[]" value="Social Media Management">
+        <div class="svc-card-body">
+          <div class="svc-card-name">Social Media Management</div>
+          <div class="svc-card-desc">Strategy, monthly content calendar, hashtag &amp; trend research, posting &amp; scheduling (Meta / Instagram / Facebook), community management (comments &amp; DMs), dedicated project manager on WhatsApp, monthly performance reporting</div>
         </div>
-        <input type="hidden" id="pkg_shoots" name="pkg_shoots">
-      </div>
+      </label>
 
-      <!-- Reels per week -->
-      <div class="pkg-row">
-        <div class="pkg-row-label">Reels / Week</div>
-        <div class="btn-group" id="reels-group">
-          <button type="button" class="pkg-btn" data-key="reels" data-val="1 reel/week" data-monthly="4" onclick="setPkg(this,'reels')">1 <span class="calc-badge">≈ 4/mo</span></button>
-          <button type="button" class="pkg-btn" data-key="reels" data-val="2 reels/week" data-monthly="8" onclick="setPkg(this,'reels')">2 <span class="calc-badge">≈ 8/mo</span></button>
-          <button type="button" class="pkg-btn" data-key="reels" data-val="3 reels/week" data-monthly="12" onclick="setPkg(this,'reels')">3 <span class="calc-badge">≈ 12/mo</span></button>
-          <button type="button" class="pkg-btn" data-key="reels" data-val="4 reels/week" data-monthly="16" onclick="setPkg(this,'reels')">4 <span class="calc-badge">≈ 16/mo</span></button>
-          <button type="button" class="pkg-btn" data-key="reels" data-val="Daily reels" data-monthly="30" onclick="setPkg(this,'reels')">Daily <span class="calc-badge">≈ 30/mo</span></button>
-          <button type="button" class="pkg-btn" data-key="reels" data-val="No reels" onclick="setPkg(this,'reels')">None</button>
+      <label class="svc-card">
+        <input type="checkbox" name="services[]" value="Content Production">
+        <div class="svc-card-body">
+          <div class="svc-card-name">Content Production</div>
+          <div class="svc-card-desc">Short-form video production (Reels, social videos), static post design, motion graphics, copywriting for all posts and captions, creative direction per content batch, revision rounds</div>
         </div>
-        <input type="hidden" id="pkg_reels" name="pkg_reels">
-      </div>
+      </label>
 
-      <!-- Static posts per month -->
-      <div class="pkg-row">
-        <div class="pkg-row-label">Static Posts / Month</div>
-        <div class="btn-group" id="posts-group">
-          <button type="button" class="pkg-btn" data-key="posts" data-val="4 posts/month" onclick="setPkg(this,'posts')">4</button>
-          <button type="button" class="pkg-btn" data-key="posts" data-val="8 posts/month" onclick="setPkg(this,'posts')">8</button>
-          <button type="button" class="pkg-btn" data-key="posts" data-val="12 posts/month" onclick="setPkg(this,'posts')">12</button>
-          <button type="button" class="pkg-btn" data-key="posts" data-val="16 posts/month" onclick="setPkg(this,'posts')">16</button>
-          <button type="button" class="pkg-btn" data-key="posts" data-val="20+ posts/month" onclick="setPkg(this,'posts')">20+</button>
-          <button type="button" class="pkg-btn" data-key="posts" data-val="No static posts" onclick="setPkg(this,'posts')">None</button>
+      <label class="svc-card">
+        <input type="checkbox" name="services[]" value="Photography and Videography">
+        <div class="svc-card-body">
+          <div class="svc-card-name">Photography &amp; Videography</div>
+          <div class="svc-card-desc">Professional on-location shoot days, photography and videography for social and commercial use, ad creative production — coordinated via Knox Artiste Films</div>
         </div>
-        <input type="hidden" id="pkg_posts" name="pkg_posts">
-      </div>
+      </label>
 
-      <!-- Stories per week -->
-      <div class="pkg-row">
-        <div class="pkg-row-label">Stories / Week</div>
-        <div class="btn-group" id="stories-group">
-          <button type="button" class="pkg-btn" data-key="stories" data-val="1-2 stories/week" onclick="setPkg(this,'stories')">1–2×</button>
-          <button type="button" class="pkg-btn" data-key="stories" data-val="3-4 stories/week" onclick="setPkg(this,'stories')">3–4×</button>
-          <button type="button" class="pkg-btn" data-key="stories" data-val="Daily stories" onclick="setPkg(this,'stories')">Daily</button>
-          <button type="button" class="pkg-btn" data-key="stories" data-val="No stories" onclick="setPkg(this,'stories')">None</button>
+      <label class="svc-card">
+        <input type="checkbox" name="services[]" value="Paid Media - Meta Ads">
+        <div class="svc-card-body">
+          <div class="svc-card-name">Paid Media — Meta Ads</div>
+          <div class="svc-card-desc">Campaign strategy and setup, ad creative direction and production, campaign monitoring and optimisation, monthly paid media performance reporting, transparent ad spend breakdown</div>
         </div>
-        <input type="hidden" id="pkg_stories" name="pkg_stories">
-      </div>
+      </label>
 
-      <!-- Event flyers -->
-      <div class="pkg-row">
-        <div class="pkg-row-label">Event Flyers / Month</div>
-        <div class="btn-group" id="flyers-group">
-          <button type="button" class="pkg-btn" data-key="flyers" data-val="No flyers" onclick="setPkg(this,'flyers')">None</button>
-          <button type="button" class="pkg-btn" data-key="flyers" data-val="Up to 4 flyers/month" onclick="setPkg(this,'flyers')">Up to 4</button>
-          <button type="button" class="pkg-btn" data-key="flyers" data-val="Up to 8 flyers/month" onclick="setPkg(this,'flyers')">Up to 8</button>
-          <button type="button" class="pkg-btn" data-key="flyers" data-val="Unlimited flyers" onclick="setPkg(this,'flyers')">Unlimited</button>
+      <label class="svc-card">
+        <input type="checkbox" name="services[]" value="Brand Identity">
+        <div class="svc-card-body">
+          <div class="svc-card-name">Brand Identity</div>
+          <div class="svc-card-desc">Full brand identity creation — logo, colour palette, typography, brand guidelines — plus visual identity applied across all digital touchpoints</div>
         </div>
-        <input type="hidden" id="pkg_flyers" name="pkg_flyers">
-      </div>
+      </label>
 
-      <!-- Engagement duration -->
-      <div class="pkg-row">
-        <div class="pkg-row-label">Engagement Length</div>
-        <div class="btn-group" id="duration-group">
-          <button type="button" class="pkg-btn" data-key="duration" data-val="3 months" onclick="setPkg(this,'duration')">3 Months</button>
-          <button type="button" class="pkg-btn" data-key="duration" data-val="6 months" onclick="setPkg(this,'duration')">6 Months</button>
-          <button type="button" class="pkg-btn" data-key="duration" data-val="12 months" onclick="setPkg(this,'duration')">12 Months</button>
-          <button type="button" class="pkg-btn" data-key="duration" data-val="Ongoing - TBD" onclick="setPkg(this,'duration')">Ongoing</button>
+      <label class="svc-card">
+        <input type="checkbox" name="services[]" value="Influencer Marketing">
+        <div class="svc-card-body">
+          <div class="svc-card-name">Influencer Marketing</div>
+          <div class="svc-card-desc">Influencer identification and outreach, ongoing relationship management, campaign coordination and performance tracking</div>
         </div>
-        <input type="hidden" id="pkg_duration" name="pkg_duration">
-      </div>
+      </label>
 
-      <!-- Live package summary -->
-      <div class="pkg-summary" id="pkg-summary">
-        <div class="pkg-summary-label">Your Package So Far</div>
-        <div class="pkg-summary-items" id="pkg-summary-items"></div>
-      </div>
+      <label class="svc-card">
+        <input type="checkbox" name="services[]" value="PR and Media Outreach">
+        <div class="svc-card-body">
+          <div class="svc-card-name">PR &amp; Media Outreach</div>
+          <div class="svc-card-desc">Media and press outreach, PR strategy and placement coordination, press coverage management</div>
+        </div>
+      </label>
 
+      <label class="svc-card">
+        <input type="checkbox" name="services[]" value="LinkedIn Management">
+        <div class="svc-card-body">
+          <div class="svc-card-name">LinkedIn Management</div>
+          <div class="svc-card-desc">LinkedIn brand page setup and management, content production and posting, LinkedIn growth strategy</div>
+        </div>
+      </label>
+
+    </div>
+    <div class="field full">
+      <label for="social_notes">Anything specific about your social media needs or content direction?</label>
+      <textarea id="social_notes" name="social_notes" placeholder="Current social status, visual aesthetic, tone of voice, references you love, upcoming campaigns or launches…" style="min-height:80px;"></textarea>
     </div>
   </div>
 
-  <!-- 04 CONTENT SERVICES -->
+  <!-- 04 BUSINESS & DIGITAL -->
   <div class="form-divider">
     <span class="div-num">04</span>
-    <span class="div-label">Content &amp; Services</span>
+    <span class="div-label">Business &amp; Digital</span>
     <span class="div-rule"></span>
   </div>
   <div class="form-grid">
     <div class="field full">
-      <label>What types of content or services do you need?</label>
+      <label>Any business or digital infrastructure services? Select all that apply.</label>
     </div>
-    <div class="svc-check-grid">
-      <label class="svc-opt"><input type="checkbox" name="services[]" value="Original Photography Shoots"><span class="svc-label">Original Photography Shoots</span></label>
-      <label class="svc-opt"><input type="checkbox" name="services[]" value="Original Video Shoots"><span class="svc-label">Original Video Shoots</span></label>
-      <label class="svc-opt"><input type="checkbox" name="services[]" value="Archive / Existing Content Repurposing"><span class="svc-label">Archive &amp; Existing Content Repurposing</span></label>
-      <label class="svc-opt"><input type="checkbox" name="services[]" value="Monthly Content Calendar Planning"><span class="svc-label">Monthly Content Calendar Planning</span></label>
-      <label class="svc-opt"><input type="checkbox" name="services[]" value="Caption Copywriting"><span class="svc-label">Caption Copywriting</span></label>
-      <label class="svc-opt"><input type="checkbox" name="services[]" value="Monthly Performance Reporting"><span class="svc-label">Monthly Performance Reporting</span></label>
-      <label class="svc-opt"><input type="checkbox" name="services[]" value="AI Video Creation"><span class="svc-label">AI Video Creation</span></label>
-      <label class="svc-opt"><input type="checkbox" name="services[]" value="AI UGC Videos - Multi-Ethnicity Character-Driven"><span class="svc-label">AI UGC Videos <span style="color:var(--muted);font-size:12px;">multi-ethnicity character-driven</span></span></label>
-      <label class="svc-opt"><input type="checkbox" name="services[]" value="Monthly Recap Video"><span class="svc-label">Monthly Recap Video</span></label>
-      <label class="svc-opt"><input type="checkbox" name="services[]" value="Event / Gig Coverage"><span class="svc-label">Event &amp; Gig Coverage</span></label>
-      <label class="svc-opt"><input type="checkbox" name="services[]" value="Brand Identity and Guidelines"><span class="svc-label">Brand Identity &amp; Guidelines</span></label>
-      <label class="svc-opt"><input type="checkbox" name="services[]" value="Web Presence Build"><span class="svc-label">Web Presence Build</span></label>
-    </div>
-    <div class="field full">
-      <label for="content_notes">Anything specific about the content direction or visual style?</label>
-      <textarea id="content_notes" name="content_notes" placeholder="Describe your visual aesthetic, tone of voice, or any references you love…"></textarea>
+    <div class="svc-card-grid">
+
+      <label class="svc-card">
+        <input type="checkbox" name="biz_services[]" value="SEO Management">
+        <div class="svc-card-body">
+          <div class="svc-card-name">SEO Management</div>
+          <div class="svc-card-desc">Keyword research and strategy, on-page SEO optimisation, monthly SEO reporting — available in 25-keyword and 50-keyword tiers</div>
+        </div>
+      </label>
+
+      <label class="svc-card">
+        <input type="checkbox" name="biz_services[]" value="Website Design and Development">
+        <div class="svc-card-body">
+          <div class="svc-card-name">Website Design &amp; Development</div>
+          <div class="svc-card-desc">Custom brand-matched website, portfolio and product pages with filtering, enquiry &amp; quote forms, WhatsApp chat integration, Google Analytics setup, SEO foundation, Year 1 hosting and maintenance included</div>
+        </div>
+      </label>
+
+      <label class="svc-card">
+        <input type="checkbox" name="biz_services[]" value="WhatsApp Automation">
+        <div class="svc-card-body">
+          <div class="svc-card-name">WhatsApp Automation</div>
+          <div class="svc-card-desc">WhatsApp automation setup for customer support and lead capture, ongoing management — scoped and priced per requirement</div>
+        </div>
+      </label>
+
+      <label class="svc-card">
+        <input type="checkbox" name="biz_services[]" value="Google Business Profile">
+        <div class="svc-card-body">
+          <div class="svc-card-name">Google Business Profile</div>
+          <div class="svc-card-desc">Business info management, review responses, posts, photos, Q&amp;A, monthly performance snapshot — keeps your business visible on Google Search and Maps</div>
+        </div>
+      </label>
+
+      <label class="svc-card">
+        <input type="checkbox" name="biz_services[]" value="Google Workspace">
+        <div class="svc-card-body">
+          <div class="svc-card-name">Google Workspace</div>
+          <div class="svc-card-desc">Business email setup and management (you@yourbrand.com), Google Workspace administration, ongoing support</div>
+        </div>
+      </label>
+
     </div>
   </div>
 
-  <!-- 05 CREDENTIALS & ACCESS -->
+  <!-- 05 PROJECT DETAILS -->
   <div class="form-divider">
     <span class="div-num">05</span>
-    <span class="div-label">Credentials &amp; Access</span>
-    <span class="div-rule"></span>
-  </div>
-  <div class="form-grid">
-    <div class="field full">
-      <label>Do you have login credentials for all your platforms?</label>
-      <div class="toggle-group" style="margin-top:4px;">
-        <button type="button" class="toggle-btn" data-group="creds" data-val="Yes — I have everything" onclick="setToggle(this,'creds')">Yes, all sorted</button>
-        <button type="button" class="toggle-btn" data-group="creds" data-val="Partially — some are missing" onclick="setToggle(this,'creds')">Partially</button>
-        <button type="button" class="toggle-btn" data-group="creds" data-val="No — need help consolidating" onclick="setToggle(this,'creds')">No, need help</button>
-      </div>
-      <input type="hidden" id="credentials" name="credentials">
-    </div>
-    <div class="field full">
-      <label>Do you need KAM to manage your full brand ecosystem — scheduling tools, analytics, linked accounts?</label>
-      <div class="toggle-group" style="margin-top:4px;">
-        <button type="button" class="toggle-btn" data-group="ecosystem" data-val="Yes — full ecosystem management" onclick="setToggle(this,'ecosystem')">Yes, full management</button>
-        <button type="button" class="toggle-btn" data-group="ecosystem" data-val="Content only — I manage the rest" onclick="setToggle(this,'ecosystem')">Content only</button>
-        <button type="button" class="toggle-btn" data-group="ecosystem" data-val="Let's discuss the scope" onclick="setToggle(this,'ecosystem')">Let's discuss</button>
-      </div>
-      <input type="hidden" id="ecosystem" name="ecosystem">
-    </div>
-    <div class="field full">
-      <label>Are your platforms connected to any scheduling or analytics tool? <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;">(e.g. Later, Hootsuite, Meta Business Suite)</span></label>
-      <div class="toggle-group" style="margin-top:4px;">
-        <button type="button" class="toggle-btn" data-group="tools" data-val="Yes — already set up" onclick="setToggle(this,'tools')">Yes</button>
-        <button type="button" class="toggle-btn" data-group="tools" data-val="No — starting fresh" onclick="setToggle(this,'tools')">No</button>
-        <button type="button" class="toggle-btn" data-group="tools" data-val="Not sure" onclick="setToggle(this,'tools')">Not sure</button>
-      </div>
-      <input type="hidden" id="tools_setup" name="tools_setup">
-    </div>
-  </div>
-
-  <!-- 06 PROJECT DETAILS -->
-  <div class="form-divider">
-    <span class="div-num">06</span>
     <span class="div-label">Project Details</span>
     <span class="div-rule"></span>
   </div>
@@ -892,9 +913,9 @@ footer {
     </div>
   </div>
 
-  <!-- 07 BUDGET -->
+  <!-- 06 BUDGET -->
   <div class="form-divider">
-    <span class="div-num">07</span>
+    <span class="div-num">06</span>
     <span class="div-label">Budget</span>
     <span class="div-rule"></span>
   </div>
@@ -1011,27 +1032,6 @@ function syncPlatforms() {
     items.appendChild(row);
   });
   if (window.initCustomSelects) initCustomSelects();
-}
-
-// ── PACKAGE BUILDER ───────────────────────────────────────────────────────────
-var pkgState = {};
-
-function setPkg(btn, key) {
-  var group = document.querySelectorAll('[data-key="' + key + '"]');
-  group.forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  pkgState[key] = btn.dataset.val;
-  document.getElementById('pkg_' + key).value = btn.dataset.val;
-  updateSummary();
-}
-
-function updateSummary() {
-  var summary = document.getElementById('pkg-summary');
-  var items = document.getElementById('pkg-summary-items');
-  var tags = Object.values(pkgState).filter(function(v) { return v && v !== 'None' && v !== 'No reels' && v !== 'No static posts' && v !== 'No stories' && v !== 'No flyers'; });
-  if (tags.length === 0) { summary.classList.remove('visible'); return; }
-  summary.classList.add('visible');
-  items.innerHTML = tags.map(function(t) { return '<span class="pkg-tag">' + t + '</span>'; }).join('');
 }
 
 // ── TOGGLE BUTTONS (credentials etc) ─────────────────────────────────────────
@@ -1169,92 +1169,6 @@ renderCal('start');
     sel.dispatchEvent(new Event('change',{bubbles:true}));
   }
   initCustomSelects(); window.initCustomSelects = initCustomSelects;
-})();
-</script>
-
-<script>
-(function() {
-  var SUPABASE_URL = 'https://pcdgantrzgiwbhltcxdm.supabase.co';
-  var ANON_KEY    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjZGdhbnRyemdpd2JobHRjeGRtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNzIzMTMsImV4cCI6MjA5MzY0ODMxM30.1HeIqIgYAZSznFXPjf3ealnk70BDMctuqmu73U7wQzQ';
-
-  var form = document.querySelector('form');
-  if (!form) return;
-
-  // Inject success/error UI after the form
-  var successDiv = document.createElement('div');
-  successDiv.id = 'rfp-success';
-  successDiv.style.cssText = 'display:none;text-align:center;padding:60px 20px;';
-  successDiv.innerHTML = '<div style="font-size:48px;margin-bottom:16px;">✓</div>' +
-    '<h2 style="font-family:Bebas Neue,sans-serif;font-size:32px;letter-spacing:2px;color:#C8C4BF;margin-bottom:8px;">Brief Received</h2>' +
-    '<p style="color:#6E6B67;font-size:15px;">We'll review your brief and be in touch within 24 hours.<br>For urgent enquiries: <a href="mailto:films@knoxartiste.com" style="color:#C0392B;">films@knoxartiste.com</a></p>';
-  form.parentNode.insertBefore(successDiv, form.nextSibling);
-
-  var errorDiv = document.createElement('div');
-  errorDiv.id = 'rfp-error';
-  errorDiv.style.cssText = 'display:none;margin-top:16px;padding:14px 20px;background:rgba(192,57,43,0.15);border-left:3px solid #C0392B;color:#C8C4BF;font-size:14px;border-radius:4px;';
-  form.appendChild(errorDiv);
-
-  form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    var btn = form.querySelector('.submit-btn');
-    btn.disabled = true;
-    btn.textContent = 'Submitting…';
-    errorDiv.style.display = 'none';
-
-    var fd = new FormData(form);
-
-    // Pull core fields
-    var lead = {
-      entity: 'kam',
-      name: fd.get('name') || '',
-      email: fd.get('email') || '',
-      phone: fd.get('phone') || null,
-      company: fd.get('company') || null,
-      form_data: {}
-    };
-
-    // Collect everything else into form_data
-    var skip = ['name','email','phone','company','_subject','_entity'];
-    var arrays = {};
-    fd.forEach(function(val, key) {
-      if (skip.includes(key)) return;
-      if (key.endsWith('[]')) {
-        var k = key.slice(0,-2);
-        arrays[k] = arrays[k] || [];
-        arrays[k].push(val);
-      } else if (val !== '') {
-        lead.form_data[key] = val;
-      }
-    });
-    Object.assign(lead.form_data, arrays);
-
-    try {
-      var res = await fetch(SUPABASE_URL + '/rest/v1/leads', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': ANON_KEY,
-          'Authorization': 'Bearer ' + ANON_KEY,
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify(lead)
-      });
-
-      if (res.ok || res.status === 201) {
-        form.style.display = 'none';
-        successDiv.style.display = 'block';
-        successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else {
-        var err = await res.json().catch(function(){ return {}; });
-        throw new Error(err.message || 'Status ' + res.status);
-      }
-    } catch(err) {
-      errorDiv.textContent = 'Something went wrong (' + err.message + '). Please try again or email films@knoxartiste.com';
-      errorDiv.style.display = 'block';
-      btn.disabled = false;
-      btn.textContent = 'Submit Brief';
-    }
-  });
 })();
 </script>
 </body>
